@@ -60,7 +60,8 @@ if response.status_code == 200:
 
         df = df.append(dic_aux, ignore_index=True)
 
-print(df.dropna())
+df = df.dropna(how='all')
+print(df)
 print(df[['GHO','COUNTRY', 'SEX', 'YEAR', 'GHECAUSES']])
 print(df[['AGEGROUP', 'Display', 'Numeric', 'Low', 'High']])
 print(df.head(200))
