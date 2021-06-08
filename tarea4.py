@@ -47,13 +47,20 @@ if response.status_code == 200:
 
     for fact in tree:
         dic_aux = {}
-        for child in fact:
 
-            if child.tag in ['COUNTRY', 'SEX', 'YEAR', 'GHECAUSES', 'AGEGROUP', 'Display', 'Numeric', 'Low', 'High'] or (child.text in GHO_filtrados):
-                dic_aux.update({child.tag: child.text})
+        if fact.find('GHO').text in GHO_filtrados: #si tiene los GHO que quiero
+            for child in fact:
+                dic_aux_aux = {}
+                if child.tag in ['GHO','COUNTRY', 'SEX', 'YEAR', 'GHECAUSES', 'AGEGROUP', 'Display', 'Numeric', 'Low', 'High']:
+                    #if child.tag == 'GHO' and (child.text in GHO_filtrados):
+                    dic_aux.update({child.tag: child.text})
+                    #dic_aux_aux.update({child.tag: child.text})
+                    #if dic_aux_aux['GHO'] in GHO_filtrados: # estoy asumiendo que el primer elemnto a leer es GHO
+                        #dic_aux.update(dic_aux_aux)
 
         df = df.append(dic_aux, ignore_index=True)
 
-print(df)
+print(df.dropna())
 print(df[['GHO','COUNTRY', 'SEX', 'YEAR', 'GHECAUSES']])
 print(df[['AGEGROUP', 'Display', 'Numeric', 'Low', 'High']])
+print(df.head(200))
